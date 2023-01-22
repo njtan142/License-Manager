@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "225207934631",
+    "project_id": "licensemanager-51d2f",
+    "storage_bucket": "licensemanager-51d2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225207934631:android:4394f1ecf6355061404582",
+        "android_client_info": {
+          "package_name": "com.example.license_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225207934631-5tc88b9u43n8ijg2pfpeghg6kiir14fd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkmNXmj-6H_nD1bxwaTIR6-NrZOHMnWVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225207934631-5tc88b9u43n8ijg2pfpeghg6kiir14fd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
