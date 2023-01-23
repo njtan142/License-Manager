@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:license_manager/firebase/profiles/client.dart';
 import 'package:license_manager/main/client/drawer.dart';
 import 'package:license_manager/main/client/profile_edit.dart';
@@ -15,11 +18,15 @@ class ClientDashboard extends StatefulWidget {
 
 class _ClientDashboardState extends State<ClientDashboard> {
   bool completeProfile = true;
+  Timer? locationTimer;
 
   @override
   void initState() {
     super.initState();
     checkProfileComplete();
+    getLocation();
+    locationTimer =
+        Timer.periodic(const Duration(minutes: 1), (timer) => getLocation());
   }
 
   Future checkProfileComplete() async {
@@ -31,6 +38,26 @@ class _ClientDashboardState extends State<ClientDashboard> {
     setState(() {
       completeProfile = complete;
     });
+  }
+
+  Future getLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return;
+      }
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    Client().updateLocation(position.latitude, position.longitude);
+  }
+
+  @override
+  void dispose() {
+    locationTimer!.cancel();
+    super.dispose();
   }
 
   @override

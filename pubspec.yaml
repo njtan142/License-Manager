@@ -44,6 +44,7 @@ dependencies:
   restart_app: ^1.1.1+1
   file_picker: ^5.2.5
   firebase_storage: ^11.0.10
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

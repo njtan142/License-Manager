@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:license_manager/firebase/profiles/client.dart';
 
 import '../../widget_builder.dart';
 
@@ -39,19 +40,20 @@ class _LicenseEditState extends State<LicenseEdit> {
     if (FirebaseAuth.instance.currentUser == null) {
       return;
     }
-    Fluttertoast.showToast(
-        msg: "Uploading...",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
+
+    showToast("Uploading...");
+
     String path = "licenses/" + FirebaseAuth.instance.currentUser!.uid;
     final ref = FirebaseStorage.instance.ref().child(path);
-    ref.putFile(_imageFile!).then((p0) async {
+
+    ref.putFile(_imageFile!).then((result) async {
       showToast("Uploaded, app will restart in 2 seconds");
       await Future.delayed(Duration(seconds: 2));
+      String url = await ref.getDownloadURL();
+      Map<String, dynamic> data = {
+        "license": url,
+      };
+      await Client().setProfile(data);
       restart();
     }).catchError((e) {
       Fluttertoast.showToast(

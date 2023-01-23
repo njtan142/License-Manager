@@ -57,4 +57,13 @@ class Client extends Profile {
     Map<String, dynamic>? data = dataSnapshot.data();
     return data;
   }
+
+  Future<void> updateLocation(double latitude, double longitude) async {
+    Database().setDocumentData(
+      "users/client/list/${user!.email}",
+      {
+        "location": {"latitude": latitude, "longitude": longitude},
+      },
+    );
+  }
 }

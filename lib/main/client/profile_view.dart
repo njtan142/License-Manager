@@ -20,6 +20,7 @@ class _ClientProfileViewState extends State<ClientProfileView> {
   String age = "N/A";
   String phoneNumber = "N/A";
   String email = Client().user!.email!;
+  String? photoURL;
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _ClientProfileViewState extends State<ClientProfileView> {
       name = userData["name"] ?? name;
       age = userData["age"] ?? age;
       phoneNumber = userData["phoneNumber"] ?? phoneNumber;
+      photoURL = userData["license"];
     });
   }
 
@@ -97,6 +99,27 @@ class _ClientProfileViewState extends State<ClientProfileView> {
                 ],
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "License",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            photoURL != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.network(
+                        photoURL!,
+                        width: 300,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  )
+                : Container()
           ],
         ),
       )),
