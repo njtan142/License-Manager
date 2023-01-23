@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:license_manager/firebase/profiles/client.dart';
 import 'package:license_manager/main.dart';
+import 'package:license_manager/main/client/driver_license_upload.dart';
 import 'package:license_manager/main/client/profile_view.dart';
 import 'package:license_manager/widget_builder.dart';
 
@@ -36,6 +37,12 @@ class ClientDrawer extends StatelessWidget {
                 title: const Text("View Profile"),
                 onTap: () async {
                   goToPage(context, ClientProfileView());
+                },
+              ),
+              ListTile(
+                title: const Text("Upload License"),
+                onTap: () async {
+                  goToPage(context, LicenseEdit());
                 },
               ),
               ListTile(

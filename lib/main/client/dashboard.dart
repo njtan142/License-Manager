@@ -25,6 +25,9 @@ class _ClientDashboardState extends State<ClientDashboard> {
   Future checkProfileComplete() async {
     bool complete = await Client().checkIfProfileIsComplete();
     print(complete);
+    if (!mounted) {
+      return;
+    }
     setState(() {
       completeProfile = complete;
     });
