@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:license_manager/firebase/profiles/client.dart';
 import 'package:license_manager/main/client/drawer.dart';
 import 'package:license_manager/main/client/profile_edit.dart';
+import 'package:license_manager/widget_builder.dart';
 
 class ClientDashboard extends StatefulWidget {
   const ClientDashboard({super.key});
@@ -23,6 +24,7 @@ class _ClientDashboardState extends State<ClientDashboard> {
 
   Future checkProfileComplete() async {
     bool complete = await Client().checkIfProfileIsComplete();
+    print(complete);
     setState(() {
       completeProfile = complete;
     });
@@ -49,11 +51,7 @@ class _ClientDashboardState extends State<ClientDashboard> {
                           const Text("Your profile is not complete yet"),
                           TextButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ClientProfileEdit()));
+                                goToPage(context, ClientProfileEdit());
                               },
                               child: Text("Edit profile")),
                         ],

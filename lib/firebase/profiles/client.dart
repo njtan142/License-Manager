@@ -39,7 +39,7 @@ class Client extends Profile {
       return false;
     }
     if (data["name"] == null) {
-      //return false;
+      return false;
     }
     if (data["age"] == null) {
       return false;
@@ -48,5 +48,13 @@ class Client extends Profile {
       return false;
     }
     return true;
+  }
+
+  Future<Map<String, dynamic>?> getProfile() async {
+    String path = "users/client/list/${user!.email}";
+    DocumentSnapshot<Map<String, dynamic>> dataSnapshot =
+        await Database().getDocumentSnapshot(path);
+    Map<String, dynamic>? data = dataSnapshot.data();
+    return data;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:license_manager/firebase/profiles/client.dart';
 import 'package:license_manager/main.dart';
+import 'package:license_manager/main/client/profile_view.dart';
 import 'package:license_manager/widget_builder.dart';
 
 import '../../firebase/auth.dart';
@@ -34,7 +35,7 @@ class ClientDrawer extends StatelessWidget {
               ListTile(
                 title: const Text("View Profile"),
                 onTap: () async {
-                  Navigator.pushNamed(context, "/dashboard/profile_child");
+                  goToPage(context, ClientProfileView());
                 },
               ),
               ListTile(

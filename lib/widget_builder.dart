@@ -320,3 +320,12 @@ Future<bool?> showSignOutDialog(context) async {
   );
   return await didSignOut;
 }
+
+void goToPage(BuildContext context, Widget page, {dynamic args}) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+}
+
+void replacePage(BuildContext context, Widget page, {dynamic args}) {
+  Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => page));
+}
