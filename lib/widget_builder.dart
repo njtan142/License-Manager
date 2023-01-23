@@ -35,6 +35,35 @@ Widget createInput(
   );
 }
 
+Widget createInputNoBorder(
+  BuildContext context,
+  double? width,
+  String hintText, {
+  TextEditingController? controller,
+  void Function(String)? onChanged,
+  String? Function(String?)? validator,
+  bool hide = false,
+  Color? color,
+}) {
+  return SizedBox(
+    width: width,
+    child: Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            hintText: hintText,
+            border: InputBorder.none,
+            hintStyle: TextStyle(color: textColor)),
+        obscureText: hide,
+        controller: controller,
+        onChanged: onChanged,
+        validator: validator,
+      ),
+    ),
+  );
+}
+
 Widget userButton(
     BuildContext context, String task, void Function() onPressed) {
   return Row(
@@ -369,4 +398,11 @@ void goToPage(BuildContext context, Widget page, {dynamic args}) {
 void replacePage(BuildContext context, Widget page, {dynamic args}) {
   Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context) => page));
+}
+
+Widget whiteSpace(double size) {
+  return SizedBox(
+    width: size,
+    height: size,
+  );
 }

@@ -65,4 +65,17 @@ class Officer extends Profile {
       },
     );
   }
+
+  Future<List<Map<String, dynamic>>> getRecords() async {
+    String path = "users/officer/records/";
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> collectionList =
+        await Database().getDocs(path);
+
+    List<Map<String, dynamic>> recordList = [];
+    await Future.forEach(collectionList, (adminSnapshot) {
+      Map<String, dynamic> data = adminSnapshot.data();
+      recordList.add(data);
+    });
+    return recordList;
+  }
 }
