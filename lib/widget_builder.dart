@@ -47,15 +47,17 @@ Widget actionButton(
   BuildContext context,
   String task, {
   void Function()? onPressed,
+  double? width,
 }) {
   return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Expanded(
-        child: ElevatedButton(
-          onPressed: onPressed,
-          child: Text(task),
-        ),
-      )
+      SizedBox(
+          width: width,
+          child: ElevatedButton(
+            onPressed: onPressed,
+            child: Text(task),
+          ))
     ],
   );
 }
@@ -289,4 +291,32 @@ void showAlert(BuildContext context, String message) {
 
 void restart() {
   Restart.restartApp();
+}
+
+Future<bool?> showSignOutDialog(context) async {
+  Future<bool?> didSignOut = showDialog<bool>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Confirm Sign Out'),
+        content: Text('Are you sure you want to sign out?'),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+          ),
+          TextButton(
+            child: Text('Sign Out'),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+          ),
+        ],
+      );
+    },
+  );
+  return await didSignOut;
 }

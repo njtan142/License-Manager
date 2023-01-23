@@ -16,9 +16,17 @@ class _AuthTypeChooseState extends State<AuthTypeChoose> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("Choose Login Type"),
+          const Text(
+            "Choose Login Type",
+            style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(
+            height: 20,
+          ),
           actionButton(
+            width: 300,
             context,
             "Continue as Admin",
             onPressed: () {
@@ -29,6 +37,7 @@ class _AuthTypeChooseState extends State<AuthTypeChoose> {
             },
           ),
           actionButton(
+            width: 300,
             context,
             "Continue as Officer",
             onPressed: () {
@@ -39,6 +48,7 @@ class _AuthTypeChooseState extends State<AuthTypeChoose> {
             },
           ),
           actionButton(
+            width: 300,
             context,
             "Continue as User/Client",
             onPressed: () {

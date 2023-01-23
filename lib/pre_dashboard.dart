@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:license_manager/main/client/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreDashboard extends StatefulWidget {
@@ -50,9 +51,10 @@ class _PreDashboardState extends State<PreDashboard> {
         //TODO
 
         break;
-      case "user":
+      case "client":
         //TODO
-
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const ClientDashboard()));
         break;
       default:
         break;

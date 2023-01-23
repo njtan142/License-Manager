@@ -42,7 +42,10 @@ class _ClientSignInPageState extends State<ClientSignInPage> {
                 return null;
               },
             ),
-            PasswordField(hintText: "Password", controller: passwordController),
+            SizedBox(
+                width: 300,
+                child: PasswordField(
+                    hintText: "Password", controller: passwordController)),
             actionButton(context, "Sign Up", onPressed: signUp),
             actionButton(
               context,
@@ -50,7 +53,7 @@ class _ClientSignInPageState extends State<ClientSignInPage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-            ) //TODO: navigation
+            )
           ],
         )),
       ),

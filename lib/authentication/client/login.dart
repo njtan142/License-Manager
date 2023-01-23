@@ -43,7 +43,10 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Login as Client"),
+            const Text(
+              "Login as Client",
+              style: TextStyle(fontSize: 20),
+            ),
             createInput(
               context,
               300,
@@ -66,7 +69,10 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
                 return null;
               },
             ),
-            PasswordField(hintText: "Password", controller: passwordController),
+            SizedBox(
+                width: 300,
+                child: PasswordField(
+                    hintText: "Password", controller: passwordController)),
             actionButton(
               context,
               "Login",
