@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:license_manager/main/client/drawer.dart';
 import 'package:license_manager/main/officer/drawer.dart';
+import 'package:license_manager/widget_builder.dart';
 
 class OfficerDashboard extends StatefulWidget {
   const OfficerDashboard({super.key});
@@ -10,25 +10,45 @@ class OfficerDashboard extends StatefulWidget {
 }
 
 class _OfficerDashboardState extends State<OfficerDashboard> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  int _selectedIndex = 0;
 
-  @override
-  void dispose() {
-    super.dispose();
+  final List<Widget> _pages = [
+    Scaffold(),
+    Scaffold(),
+    Scaffold(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Dashboard")),
-      drawer: const OfficerDrawer(),
-      body: Center(
-          child: Column(
-        children: [],
-      )),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: containerColor,
+        fixedColor: lightColor,
+        unselectedItemColor: fadedColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: "Chat",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Settings",
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
     );
   }
 }

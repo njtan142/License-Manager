@@ -15,48 +15,80 @@ class _AuthTypeChooseState extends State<AuthTypeChoose> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
         children: [
-          const Text(
-            "Choose Login Type",
-            style: TextStyle(fontSize: 20),
+          Align(
+            alignment: AlignmentDirectional.center,
+            child: const Text(
+              "Login",
+              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+            ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          actionButton(
-            width: 300,
-            context,
-            "Continue as Admin",
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const AdminLoginPage()));
-            },
-          ),
-          actionButton(
-            width: 300,
-            context,
-            "Continue as Officer",
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const OfficerLoginPage()));
-            },
-          ),
-          actionButton(
-            width: 300,
-            context,
-            "Continue as User/Client",
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ClientLoginPage()));
-            },
+          Align(
+            alignment: AlignmentDirectional.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  actionButton(
+                    textsize: 18,
+                    fontWeight: FontWeight.bold,
+                    width: 300,
+                    height: 50,
+                    context,
+                    "Continue as Admin",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AdminLoginPage()));
+                    },
+                    borderRadius: 20,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  actionButton(
+                    textsize: 18,
+                    fontWeight: FontWeight.bold,
+                    width: 300,
+                    height: 50,
+                    context,
+                    "Continue as Officer",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const OfficerLoginPage()));
+                    },
+                    borderRadius: 20,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  actionButton(
+                    textsize: 18,
+                    fontWeight: FontWeight.bold,
+                    width: 300,
+                    height: 50,
+                    context,
+                    "Continue as Client",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ClientLoginPage()));
+                    },
+                    borderRadius: 20,
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

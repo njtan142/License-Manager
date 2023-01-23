@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:license_manager/authentication/choose_auth.dart';
 import 'package:license_manager/pre_dashboard.dart';
+import 'package:license_manager/splashscreen.dart';
 
 import 'firebase/auth.dart';
 
@@ -29,9 +30,18 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          // or from RGB
+
+          primary: Color.fromARGB(255, 93, 82, 148),
+        ),
+        backgroundColor: Colors.black,
+        scaffoldBackgroundColor: Color.fromARGB(255, 19, 0, 71),
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Color.fromARGB(255, 214, 212, 230),
+            ),
       ),
-      home: const SessionChecker(),
+      home: const SplashScreen(),
     );
   }
 }

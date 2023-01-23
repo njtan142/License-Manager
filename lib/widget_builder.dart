@@ -15,16 +15,22 @@ Widget createInput(
   return Container(
     width: width,
     decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.circular(5), // set the border radius to 10
-    ),
-    child: TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(hintText: hintText, border: InputBorder.none),
-      obscureText: hide,
-      controller: controller,
-      onChanged: onChanged,
-      validator: validator,
+        color: color,
+        borderRadius: BorderRadius.circular(5), // set the border radius to 10
+        border: Border.all(color: textColor)),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            hintText: hintText,
+            border: InputBorder.none,
+            hintStyle: TextStyle(color: textColor)),
+        obscureText: hide,
+        controller: controller,
+        onChanged: onChanged,
+        validator: validator,
+      ),
     ),
   );
 }
@@ -48,20 +54,41 @@ Widget actionButton(
   String task, {
   void Function()? onPressed,
   double? width,
+  double? height,
+  double borderRadius = 5,
+  double? textsize,
+  FontWeight fontWeight = FontWeight.w500,
 }) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       SizedBox(
-          width: width,
-          child: ElevatedButton(
-            onPressed: onPressed,
-            child: Text(task),
-          ))
+        width: width,
+        height: height,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+            ),
+          ),
+          child: Text(
+            task,
+            style: TextStyle(
+                fontSize: textsize, fontWeight: fontWeight, color: textColor),
+          ),
+        ),
+      )
     ],
   );
 }
 
+Color textColor = Color.fromARGB(255, 231, 230, 240);
+Color lightColor = Color.fromARGB(255, 231, 230, 240);
+Color fadedColor = Color.fromARGB(185, 231, 230, 240);
+Color containerColor = Color.fromARGB(255, 45, 2, 120);
 //TODO:
 // Marker createMarker(String id, String title, LatLng position,
 //     {void Function()? onTap, BitmapDescriptor? icon}) {
@@ -186,24 +213,38 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: _obscureText,
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-        border: widget.inputBorder,
-        suffixIcon: IconButton(
-          icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-          onPressed: () {
-            if (!mounted) {
-              return;
-            }
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5), // set the border radius to 10
+          border: Border.all(color: textColor)),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8),
+        child: TextFormField(
+          obscureText: _obscureText,
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            border: widget.inputBorder,
+            focusColor: textColor,
+            fillColor: textColor,
+            hintStyle: TextStyle(color: textColor),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _obscureText ? Icons.visibility : Icons.visibility_off,
+                color: textColor,
+              ),
+              onPressed: () {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+            ),
+          ),
+          controller: widget.controller,
         ),
       ),
-      controller: widget.controller,
     );
   }
 }

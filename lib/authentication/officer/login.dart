@@ -21,6 +21,13 @@ class _OfficerLoginPageState extends State<OfficerLoginPage> {
 
   bool isOfficer = false;
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   Future checkCredentials(String email, {bool shouldLogin = false}) async {
     email = email.trim();
     print("hello");
@@ -44,43 +51,74 @@ class _OfficerLoginPageState extends State<OfficerLoginPage> {
       body: Form(
         key: _formKey,
         child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
           children: [
-            const Text(
-              "Login as Client",
-              style: TextStyle(fontSize: 20),
+            Align(
+              alignment: AlignmentDirectional.center,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 200),
+                child: const Text(
+                  "Hello, Officer!",
+                  style: TextStyle(fontSize: 40),
+                ),
+              ),
             ),
-            createInput(
-              context,
-              300,
-              "Email",
-              controller: emailController,
-              onChanged: (email) {
-                checkCredentials(email.trim());
-              },
-              validator: (email) {
-                if (email == null || email.isEmpty) {
-                  return "Email is empty";
-                }
-                if (!emailValidationExpression.hasMatch(email)) {
-                  return '\u26A0 Email is empty';
-                }
-                if (!isOfficer) {
-                  checkCredentials(email.trim(), shouldLogin: true);
-                  return 'You are not an officer or is still being verified, try again after few seconds';
-                }
-                return null;
-              },
-            ),
-            SizedBox(
-                width: 300,
-                child: PasswordField(
-                    hintText: "Password", controller: passwordController)),
-            actionButton(
-              context,
-              "Login",
-              onPressed: login,
+            Align(
+              alignment: AlignmentDirectional.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: containerColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        createInput(
+                          context,
+                          300,
+                          "Email",
+                          controller: emailController,
+                          onChanged: (email) {
+                            checkCredentials(email.trim());
+                          },
+                          validator: (email) {
+                            if (email == null || email.isEmpty) {
+                              return "Email is empty";
+                            }
+                            if (!emailValidationExpression.hasMatch(email)) {
+                              return '\u26A0 Email is empty';
+                            }
+                            if (!isOfficer) {
+                              checkCredentials(email.trim(), shouldLogin: true);
+                              return 'You are not an officer or is still being verified, try again after few seconds';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 10),
+                        SizedBox(
+                            width: 300,
+                            child: PasswordField(
+                                hintText: "Password",
+                                controller: passwordController)),
+                        SizedBox(height: 30),
+                        actionButton(
+                            width: 300,
+                            height: 50,
+                            context,
+                            "Login",
+                            onPressed: login,
+                            borderRadius: 20),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         )),
