@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:license_manager/firebase/profiles/client.dart';
 
 import '../../widget_builder.dart';
+import 'license_type.dart';
 
 class LicenseEdit extends StatefulWidget {
   const LicenseEdit({super.key});
@@ -18,6 +19,7 @@ class LicenseEdit extends StatefulWidget {
 
 class _LicenseEditState extends State<LicenseEdit> {
   File? _imageFile;
+  String selectedType = "N/A";
 
   Future<void> _pickImage() async {
     final result = await FilePicker.platform.pickFiles();
@@ -52,6 +54,7 @@ class _LicenseEditState extends State<LicenseEdit> {
       String url = await ref.getDownloadURL();
       Map<String, dynamic> data = {
         "license": url,
+        "licenseType": selectedType,
       };
       await Client().setProfile(data);
       restart();
@@ -92,10 +95,17 @@ class _LicenseEditState extends State<LicenseEdit> {
               onPressed: _pickImage,
               child: Text('Pick Image'),
             ),
-            ElevatedButton(
-              onPressed: uploadImage,
-              child: Text('Upload Image'),
+            SizedBox(
+              height: 50,
             ),
+            DriverLicenseTypeDropdown(
+              onChanged: (value) {
+                setState(() {
+                  selectedType = value!;
+                });
+              },
+            ),
+            actionButton(context, "Save", onPressed: uploadImage, width: 200),
           ],
         ),
       ),

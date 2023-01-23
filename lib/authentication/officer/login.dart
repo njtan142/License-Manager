@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:license_manager/authentication/client/signup.dart';
 import 'package:license_manager/widget_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../firebase/auth.dart';
+import '../../main.dart';
 
 class OfficerLoginPage extends StatefulWidget {
   const OfficerLoginPage({super.key});
@@ -21,15 +23,18 @@ class _OfficerLoginPageState extends State<OfficerLoginPage> {
 
   Future checkCredentials(String email, {bool shouldLogin = false}) async {
     email = email.trim();
-    bool isOfficerAwait = await Auth().checkIfOfficer(email);
+    print("hello");
+    bool isClientAwait = await Auth().checkIfOfficer(email);
     if (!mounted) {
       return;
     }
     setState(() {
-      isOfficer = isOfficerAwait;
+      isOfficer = isClientAwait;
     });
-    if (_formKey.currentState!.validate() && shouldLogin) {
-      login();
+    if (shouldLogin) {
+      if (_formKey.currentState!.validate()) {
+        login();
+      }
     }
   }
 
@@ -42,7 +47,10 @@ class _OfficerLoginPageState extends State<OfficerLoginPage> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Login as Officer"),
+            const Text(
+              "Login as Client",
+              style: TextStyle(fontSize: 20),
+            ),
             createInput(
               context,
               300,
@@ -65,7 +73,10 @@ class _OfficerLoginPageState extends State<OfficerLoginPage> {
                 return null;
               },
             ),
-            PasswordField(hintText: "Password", controller: passwordController),
+            SizedBox(
+                width: 300,
+                child: PasswordField(
+                    hintText: "Password", controller: passwordController)),
             actionButton(
               context,
               "Login",
@@ -82,7 +93,7 @@ class _OfficerLoginPageState extends State<OfficerLoginPage> {
       return;
     }
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString("userType", "officer");
+    await prefs.setString("userType", "officer");
     String result = await Auth().signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim());
@@ -96,6 +107,7 @@ class _OfficerLoginPageState extends State<OfficerLoginPage> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
+      Navigator.pop(context);
     } else {
       if (!mounted) {
         return;

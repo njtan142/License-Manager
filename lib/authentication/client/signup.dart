@@ -5,6 +5,8 @@ import 'package:license_manager/firebase/profiles/client.dart';
 import 'package:license_manager/widget_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../main.dart';
+
 class ClientSignInPage extends StatefulWidget {
   const ClientSignInPage({super.key});
 
@@ -77,7 +79,9 @@ class _ClientSignInPageState extends State<ClientSignInPage> {
         password: passwordController.text.trim());
     if (result == "Success") {
       showToast("Sign up success");
-      restart();
+      Navigator.pop(context);
+      Navigator.pop(context);
+      replacePage(context, MyApp());
     } else {
       if (!mounted) {
         return;

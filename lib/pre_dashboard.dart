@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:license_manager/main/admin/dashboard.dart';
 import 'package:license_manager/main/client/dashboard.dart';
+import 'package:license_manager/main/officer/dashboard.dart';
+import 'package:license_manager/widget_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreDashboard extends StatefulWidget {
@@ -42,19 +45,19 @@ class _PreDashboardState extends State<PreDashboard> {
     if (!mounted) {
       return;
     }
+    print(userType);
 
     switch (userType) {
       case "admin":
-        //TODO
+        replacePage(context, const AdminDashboard());
+        timer!.cancel();
         break;
       case "officer":
-        //TODO
-
+        replacePage(context, const OfficerDashboard());
+        timer!.cancel();
         break;
       case "client":
-        //TODO
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ClientDashboard()));
+        replacePage(context, const ClientDashboard());
         timer!.cancel();
         break;
       default:

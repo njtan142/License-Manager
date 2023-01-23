@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:license_manager/firebase/profiles/profile.dart';
-
 import '../database.dart';
 
-class Client extends Profile {
+class Officer extends Profile {
   @override
-  String name = "Client";
+  String name = "Officer";
 
   Future<void> setProfile(Map<String, dynamic> data, {String? email}) async {
     String? path;
@@ -47,9 +46,6 @@ class Client extends Profile {
     if (data["phoneNumber"] == null) {
       return false;
     }
-    if (data["precinct"] == null) {
-      return false;
-    }
     return true;
   }
 
@@ -62,13 +58,11 @@ class Client extends Profile {
   }
 
   Future<void> updateLocation(double latitude, double longitude) async {
-    try {
-      Database().setDocumentData(
-        "users/client/list/${user!.email}",
-        {
-          "location": {"latitude": latitude, "longitude": longitude},
-        },
-      );
-    } catch (e) {}
+    Database().setDocumentData(
+      "users/client/list/${user!.email}",
+      {
+        "location": {"latitude": latitude, "longitude": longitude},
+      },
+    );
   }
 }

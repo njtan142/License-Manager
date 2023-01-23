@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:license_manager/firebase/profiles/client.dart';
+import 'package:license_manager/firebase/profiles/officer.dart';
 import 'package:license_manager/main.dart';
-import 'package:license_manager/main/client/driver_license_upload.dart';
-import 'package:license_manager/main/client/profile_view.dart';
-import 'package:license_manager/main/client/violations_view.dart';
 import 'package:license_manager/widget_builder.dart';
 
 import '../../firebase/auth.dart';
 
-class ClientDrawer extends StatelessWidget {
-  const ClientDrawer({super.key});
+class OfficerDrawer extends StatelessWidget {
+  const OfficerDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,28 +25,10 @@ class ClientDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              accountName: Text(Client().name),
-              accountEmail: Text(Client().user!.email.toString())),
+              accountName: Text(Officer().name),
+              accountEmail: Text(Officer().user!.email.toString())),
           Column(
             children: [
-              ListTile(
-                title: const Text("View Profile"),
-                onTap: () async {
-                  goToPage(context, ClientProfileView());
-                },
-              ),
-              ListTile(
-                title: const Text("Upload License"),
-                onTap: () async {
-                  goToPage(context, LicenseEdit());
-                },
-              ),
-              ListTile(
-                title: const Text("View Violations"),
-                onTap: () async {
-                  goToPage(context, ViolationsPage());
-                },
-              ),
               ListTile(
                 title: const Text("Signout"),
                 onTap: () async {
@@ -60,7 +39,6 @@ class ClientDrawer extends StatelessWidget {
                   if (!confirmed) {
                     return;
                   }
-                  await Client().updateActiveStatus();
                   await Auth().signOut();
                   showToast("Signed out");
                   Navigator.pop(context);

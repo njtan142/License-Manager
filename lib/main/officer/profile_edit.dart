@@ -2,22 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:license_manager/firebase/profiles/client.dart';
+import 'package:license_manager/firebase/profiles/officer.dart';
+import 'package:license_manager/main/officer/license_type.dart';
 import 'package:license_manager/widget_builder.dart';
 
 import '../../main.dart';
 
-class ClientProfileEdit extends StatefulWidget {
-  const ClientProfileEdit({super.key});
+class OfficerProfileEdit extends StatefulWidget {
+  const OfficerProfileEdit({super.key});
 
   @override
-  State<ClientProfileEdit> createState() => _ClientProfileEditState();
+  State<OfficerProfileEdit> createState() => _OfficerProfileEditState();
 }
 
-class _ClientProfileEditState extends State<ClientProfileEdit> {
+class _OfficerProfileEditState extends State<OfficerProfileEdit> {
   final nameController = TextEditingController();
   final ageController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final precinctNumberController = TextEditingController();
+  String? position;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,13 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                 controller: phoneNumberController),
             createInput(context, 300, "Precint Number of Barangay",
                 controller: precinctNumberController),
+            OfficerPositionDropdown(
+              onChanged: (value) {
+                setState(() {
+                  position = value;
+                });
+              },
+            ),
             actionButton(
               context,
               "Save",
@@ -44,8 +54,9 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                   "age": ageController.text.trim(),
                   "phoneNumber": phoneNumberController.text.trim(),
                   "precinct": precinctNumberController.text.trim(),
+                  "position": position ?? "N/A"
                 };
-                await Client().setProfile(data);
+                await Officer().setProfile(data);
                 showToast("Profile saved");
                 Navigator.pop(context);
                 Navigator.pushReplacement(context,

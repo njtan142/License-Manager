@@ -5,6 +5,7 @@ import 'package:license_manager/widget_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../firebase/auth.dart';
+import '../../main.dart';
 
 class ClientLoginPage extends StatefulWidget {
   const ClientLoginPage({super.key});
@@ -116,7 +117,7 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      // restart();
+      Navigator.pop(context);
     } else {
       if (!mounted) {
         return;

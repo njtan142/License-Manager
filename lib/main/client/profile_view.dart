@@ -20,6 +20,8 @@ class _ClientProfileViewState extends State<ClientProfileView> {
   String age = "N/A";
   String phoneNumber = "N/A";
   String email = Client().user!.email!;
+  String precinctNumber = "N/A";
+  String licenseType = "N/A";
   String? photoURL;
 
   @override
@@ -41,6 +43,8 @@ class _ClientProfileViewState extends State<ClientProfileView> {
       name = userData["name"] ?? name;
       age = userData["age"] ?? age;
       phoneNumber = userData["phoneNumber"] ?? phoneNumber;
+      precinctNumber = userData["precinct"] ?? precinctNumber;
+      licenseType = userData["licenseType"] ?? licenseType;
       photoURL = userData["license"];
     });
   }
@@ -94,6 +98,16 @@ class _ClientProfileViewState extends State<ClientProfileView> {
                   createProfileInfo(context, "Phone Number", phoneNumber,
                       style: infoTextStyle),
                   const SizedBox(
+                    height: 10,
+                  ),
+                  createProfileInfo(context, "Precinct Number", precinctNumber,
+                      style: infoTextStyle),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  createProfileInfo(context, "License Type", licenseType,
+                      style: infoTextStyle),
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
@@ -104,7 +118,7 @@ class _ClientProfileViewState extends State<ClientProfileView> {
               children: [
                 Text(
                   "License",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),

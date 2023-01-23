@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:license_manager/authentication/client/signup.dart';
+import 'package:license_manager/main.dart';
 import 'package:license_manager/widget_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../firebase/auth.dart';
+import '../../firebase/auth.dart';
 
 class AdminLoginPage extends StatefulWidget {
   const AdminLoginPage({super.key});
@@ -21,15 +23,18 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
 
   Future checkCredentials(String email, {bool shouldLogin = false}) async {
     email = email.trim();
-    bool isAdminAwait = await Auth().checkIfAdmin(email);
+    print("hello");
+    bool isClientAwait = await Auth().checkIfAdmin(email);
     if (!mounted) {
       return;
     }
     setState(() {
-      isAdmin = isAdminAwait;
+      isAdmin = isClientAwait;
     });
-    if (_formKey.currentState!.validate() && shouldLogin) {
-      login();
+    if (shouldLogin) {
+      if (_formKey.currentState!.validate()) {
+        login();
+      }
     }
   }
 
@@ -42,7 +47,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Login as Admin"),
+            const Text(
+              "Login as Admin",
+              style: TextStyle(fontSize: 20),
+            ),
             createInput(
               context,
               300,
@@ -65,7 +73,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 return null;
               },
             ),
-            PasswordField(hintText: "Password", controller: passwordController),
+            SizedBox(
+                width: 300,
+                child: PasswordField(
+                    hintText: "Password", controller: passwordController)),
             actionButton(
               context,
               "Login",
@@ -82,7 +93,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
       return;
     }
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString("userType", "admin");
+    await prefs.setString("userType", "admin");
     String result = await Auth().signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim());
@@ -96,7 +107,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      restart();
+      Navigator.pop(context);
     } else {
       if (!mounted) {
         return;
