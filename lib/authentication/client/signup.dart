@@ -66,7 +66,7 @@ class _ClientSignInPageState extends State<ClientSignInPage> {
     }
     showToast("Sign in up... Please wait");
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString("userType", "client");
+    await prefs.setString("userType", "client");
     // create the data
     Map<String, dynamic> data = {
       "email": emailController.text.trim(),

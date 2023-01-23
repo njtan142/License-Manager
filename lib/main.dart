@@ -50,8 +50,10 @@ class _SessionCheckerState extends State<SessionChecker> {
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          print("Signed in");
           return const PreDashboard();
         } else {
+          print("Not signed in");
           return const AuthTypeChoose();
         }
       },

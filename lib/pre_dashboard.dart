@@ -55,6 +55,7 @@ class _PreDashboardState extends State<PreDashboard> {
         //TODO
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const ClientDashboard()));
+        timer!.cancel();
         break;
       default:
         break;

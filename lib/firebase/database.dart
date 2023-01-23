@@ -21,6 +21,7 @@ class Database {
   Future<bool> checkIfExists(
       {String? path, DocumentSnapshot<Map<String, dynamic>>? reference}) async {
     if (path != null && reference == null) {
+      print(path);
       reference = await getDocumentSnapshot(path);
     }
 

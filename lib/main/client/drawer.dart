@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:license_manager/firebase/profiles/client.dart';
+import 'package:license_manager/main.dart';
 import 'package:license_manager/widget_builder.dart';
 
 import '../../firebase/auth.dart';
@@ -47,8 +48,11 @@ class ClientDrawer extends StatelessWidget {
                     return;
                   }
                   await Client().updateActiveStatus();
-                  Auth().signOut().then((value) =>
-                      Navigator.pushReplacementNamed(context, "/home"));
+                  await Auth().signOut();
+                  showToast("Signed out");
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => const MyApp()));
                 },
               ),
             ],

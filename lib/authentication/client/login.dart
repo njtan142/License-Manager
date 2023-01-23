@@ -22,6 +22,7 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
 
   Future checkCredentials(String email, {bool shouldLogin = false}) async {
     email = email.trim();
+    print("hello");
     bool isClientAwait = await Auth().checkIfClient(email);
     if (!mounted) {
       return;
@@ -29,8 +30,10 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
     setState(() {
       isClient = isClientAwait;
     });
-    if (_formKey.currentState!.validate() && shouldLogin) {
-      login();
+    if (shouldLogin) {
+      if (_formKey.currentState!.validate()) {
+        login();
+      }
     }
   }
 
@@ -99,7 +102,7 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
       return;
     }
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString("userType", "client");
+    await prefs.setString("userType", "client");
     String result = await Auth().signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim());
@@ -113,7 +116,7 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      restart();
+      // restart();
     } else {
       if (!mounted) {
         return;

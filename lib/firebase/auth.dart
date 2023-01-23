@@ -81,9 +81,12 @@ class Auth {
   Future<bool> checkIfClient(String email) async {
     try {
       Database database = Database();
-      bool isUser = await database.checkIfExists(path: "users/client/list");
+      bool isUser =
+          await database.checkIfExists(path: "users/client/list/$email");
+      print(isUser);
       return isUser;
     } catch (e) {
+      print(e);
       await Future.delayed(const Duration(seconds: 3));
       return await checkIfClient(email);
     }
