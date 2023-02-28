@@ -11,6 +11,7 @@ Widget createInput(
   String? Function(String?)? validator,
   bool hide = false,
   Color? color,
+  bool readonly = false,
 }) {
   return Container(
     width: width,
@@ -21,6 +22,7 @@ Widget createInput(
     child: Padding(
       padding: const EdgeInsets.only(left: 8, right: 8),
       child: TextFormField(
+        readOnly: readonly,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
             hintText: hintText,
@@ -87,6 +89,7 @@ Widget actionButton(
   double borderRadius = 5,
   double? textsize,
   FontWeight fontWeight = FontWeight.w500,
+  Color? color,
 }) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -97,6 +100,7 @@ Widget actionButton(
         child: ElevatedButton(
           onPressed: onPressed,
           style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(color),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),

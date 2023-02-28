@@ -33,11 +33,15 @@ class _OfficerProfileEditState extends State<OfficerProfileEdit> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             createInput(context, 300, "Name", controller: nameController),
+            whiteSpace(15),
             createInput(context, 300, "Age", controller: ageController),
+            whiteSpace(15),
             createInput(context, 300, "Phone Number",
                 controller: phoneNumberController),
+            whiteSpace(15),
             createInput(context, 300, "Precint Number of Barangay",
                 controller: precinctNumberController),
+            whiteSpace(15),
             OfficerPositionDropdown(
               onChanged: (value) {
                 setState(() {
@@ -45,9 +49,11 @@ class _OfficerProfileEditState extends State<OfficerProfileEdit> {
                 });
               },
             ),
+            whiteSpace(15),
             actionButton(
               context,
               "Save",
+              width: 300,
               onPressed: () async {
                 Map<String, dynamic> data = {
                   "name": nameController.text.trim(),

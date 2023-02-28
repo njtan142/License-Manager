@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:license_manager/firebase/profiles/officer.dart';
+import 'package:license_manager/main/officer/active_list.dart';
 import 'package:license_manager/main/officer/drawer.dart';
 import 'package:license_manager/main/officer/homepage.dart';
+import 'package:license_manager/main/officer/profile.dart';
 import 'package:license_manager/widget_builder.dart';
 
 class OfficerDashboard extends StatefulWidget {
@@ -11,19 +16,40 @@ class OfficerDashboard extends StatefulWidget {
 }
 
 class _OfficerDashboardState extends State<OfficerDashboard> {
+  Timer? activeStatusTimer;
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     OfficerHomePage(),
+    OfficerProfile(),
     Scaffold(),
-    Scaffold(),
-    Scaffold(),
+    OfficerActiveList(),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future updateActiveStatus() async {
+    await Officer().updateActiveStatus();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    updateActiveStatus();
+    activeStatusTimer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      updateActiveStatus();
+    });
+  }
+
+  @override
+  void dispose() {
+    activeStatusTimer!.cancel();
+    super.dispose();
   }
 
   @override

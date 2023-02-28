@@ -9,9 +9,9 @@ class Officer extends Profile {
   Future<void> setProfile(Map<String, dynamic> data, {String? email}) async {
     String? path;
     if (email != null) {
-      path = "users/client/list/$email";
+      path = "users/officer/list/$email";
     } else {
-      path = "users/client/list/${user!.email}";
+      path = "users/officer/list/${user!.email}";
     }
     await Database().setDocumentData(path, data);
   }
@@ -20,7 +20,7 @@ class Officer extends Profile {
     if (user == null) {
       return;
     }
-    String path = "users/client/list/${user!.email}";
+    String path = "users/officer/list/${user!.email}";
     DateTime currentTime = DateTime.now();
     Timestamp currentTimeStamp = Timestamp.fromDate(currentTime);
     var data = {
@@ -30,7 +30,7 @@ class Officer extends Profile {
   }
 
   Future checkIfProfileIsComplete() async {
-    String path = "users/client/list/${user!.email}";
+    String path = "users/officer/list/${user!.email}";
     DocumentSnapshot<Map<String, dynamic>> dataSnapshot =
         await Database().getDocumentSnapshot(path);
     Map<String, dynamic>? data = dataSnapshot.data();
@@ -50,7 +50,7 @@ class Officer extends Profile {
   }
 
   Future<Map<String, dynamic>?> getProfile() async {
-    String path = "users/client/list/${user!.email}";
+    String path = "users/officer/list/${user!.email}";
     DocumentSnapshot<Map<String, dynamic>> dataSnapshot =
         await Database().getDocumentSnapshot(path);
     Map<String, dynamic>? data = dataSnapshot.data();
@@ -59,7 +59,7 @@ class Officer extends Profile {
 
   Future<void> updateLocation(double latitude, double longitude) async {
     Database().setDocumentData(
-      "users/client/list/${user!.email}",
+      "users/officer/list/${user!.email}",
       {
         "location": {"latitude": latitude, "longitude": longitude},
       },
@@ -74,8 +74,94 @@ class Officer extends Profile {
     List<Map<String, dynamic>> recordList = [];
     await Future.forEach(collectionList, (adminSnapshot) {
       Map<String, dynamic> data = adminSnapshot.data();
+      data["id"] = adminSnapshot.id;
       recordList.add(data);
     });
     return recordList;
+  }
+
+  Future<void> setRecord(Map<String, dynamic> data) async {
+    String path = "users/officer/records/";
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc("officer")
+        .collection("records")
+        .doc(data["id"])
+        .set(data, SetOptions(merge: true));
+  }
+
+  Future<List<Map<String, dynamic>>> getClientData() async {
+    String path = "users/client/list/";
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> collectionList =
+        await Database().getDocs(path);
+
+    List<Map<String, dynamic>> adminList = [];
+    await Future.forEach(collectionList, (adminSnapshot) {
+      Map<String, dynamic> data = adminSnapshot.data();
+      Timestamp? activeAt = data["active_at"];
+      if (activeAt != null) {
+        final activeDate = activeAt.toDate();
+        final now = DateTime.now();
+        final twoMinutesAgo = now.subtract(const Duration(minutes: 5));
+        data["isOnline"] =
+            activeDate.isAfter(twoMinutesAgo) && activeDate.isBefore(now);
+      } else {
+        data["isOnline"] = false;
+      }
+      if (data["email"] != null) {
+        adminList.add(data);
+      }
+    });
+
+    adminList.sort((a, b) {
+      if (a["active_at"] == null && b["active_at"] == null) {
+        return 0;
+      } else if (a["active_at"] == null) {
+        return 1;
+      } else if (b["active_at"] == null) {
+        return -1;
+      } else {
+        return b["active_at"].compareTo(a["active_at"]);
+      }
+    });
+
+    return adminList;
+  }
+
+  Future<List<Map<String, dynamic>>> getOfficersData() async {
+    String path = "users/officer/list/";
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> collectionList =
+        await Database().getDocs(path);
+
+    List<Map<String, dynamic>> adminList = [];
+    await Future.forEach(collectionList, (adminSnapshot) {
+      Map<String, dynamic> data = adminSnapshot.data();
+      Timestamp? activeAt = data["active_at"];
+      if (activeAt != null) {
+        final activeDate = activeAt.toDate();
+        print(activeDate);
+        final now = DateTime.now();
+        final twoMinutesAgo = now.subtract(const Duration(minutes: 5));
+        data["isOnline"] =
+            activeDate.isAfter(twoMinutesAgo) && activeDate.isBefore(now);
+      } else {
+        data["isOnline"] = false;
+      }
+      adminList.add(data);
+    });
+
+    adminList.sort((a, b) {
+      if (a["active_at"] == null && b["active_at"] == null) {
+        return 0;
+      } else if (a["active_at"] == null) {
+        return 1;
+      } else if (b["active_at"] == null) {
+        return -1;
+      } else {
+        return b["active_at"].compareTo(a["active_at"]);
+      }
+    });
+
+    return adminList;
   }
 }
