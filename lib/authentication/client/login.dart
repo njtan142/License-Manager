@@ -49,8 +49,12 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
           children: [
             const Text(
               "Login as Client",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2),
             ),
+            whiteSpace(20),
             createInput(
               context,
               300,
@@ -73,25 +77,24 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
                 return null;
               },
             ),
+            whiteSpace(10),
             SizedBox(
                 width: 300,
                 child: PasswordField(
                     hintText: "Password", controller: passwordController)),
+            whiteSpace(15),
             actionButton(
               context,
               "Login",
+              width: 250,
               onPressed: login,
             ),
-            actionButton(
-              context,
-              "Sign Up",
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ClientSignInPage()));
-              },
-            ),
+            whiteSpace(5),
+            TextButton(
+                onPressed: () {
+                  goToPage(context, ClientSignInPage());
+                },
+                child: Text("Create Account")),
           ],
         )),
       ),

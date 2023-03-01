@@ -295,6 +295,7 @@ class CountOverview extends StatelessWidget {
       child: SizedBox(
         height: 100,
         child: Card(
+          color: Color.fromARGB(255, 146, 23, 217),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -373,6 +374,7 @@ Future<bool?> showSignOutDialog(context) async {
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
+        backgroundColor: Color.fromARGB(255, 50, 45, 71),
         title: Text('Confirm Sign Out'),
         content: Text('Are you sure you want to sign out?'),
         actions: <Widget>[

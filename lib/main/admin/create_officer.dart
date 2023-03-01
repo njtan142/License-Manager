@@ -38,7 +38,7 @@ class _OfficerCreateFormState extends State<OfficerCreateForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Admin"),
+        title: const Text("Create Officer"),
       ),
       body: Center(
         child: Form(
@@ -58,39 +58,39 @@ class _OfficerCreateFormState extends State<OfficerCreateForm> {
                   return null;
                 },
               ),
+              whiteSpace(10),
               SizedBox(
                 width: 300,
                 child: PasswordField(
                     hintText: "Password", controller: passwordController),
               ),
-              SizedBox(
-                width: 300,
-                child: actionButton(
-                  context,
-                  "Create Officer",
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
+              whiteSpace(15),
+              actionButton(
+                context,
+                "Create Officer",
+                width: 250,
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
 
-                      showToast("Please wait...");
+                    showToast("Please wait...");
 
-                      // Perform create admin action
-                      bool creationSucceeded = await Admin().createOfficer(
-                          emailController.text, passwordController.text);
-                      if (creationSucceeded) {
-                        if (!mounted) {
-                          return;
-                        }
-
-                        showToast("Officer creation succeeded");
-                        restart();
-                      } else {
-                        showAlert(context,
-                            "Officer creation failed, please try again later");
+                    // Perform create admin action
+                    bool creationSucceeded = await Admin().createOfficer(
+                        emailController.text, passwordController.text);
+                    if (creationSucceeded) {
+                      if (!mounted) {
+                        return;
                       }
+
+                      showToast("Officer creation succeeded");
+                      restart();
+                    } else {
+                      showAlert(context,
+                          "Officer creation failed, please try again later");
                     }
-                  },
-                ),
+                  }
+                },
               )
             ],
           ),

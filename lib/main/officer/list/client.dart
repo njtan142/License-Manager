@@ -29,6 +29,9 @@ class _OfficerClientViewListState extends State<OfficerClientViewList> {
       return;
     }
     List<Map<String, dynamic>> adminListAwait = await Officer().getClientData();
+    if (!mounted) {
+      return;
+    }
     setState(() {
       adminList = adminListAwait;
       adminCount = adminListAwait.length;

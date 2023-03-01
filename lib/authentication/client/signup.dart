@@ -28,7 +28,14 @@ class _ClientSignInPageState extends State<ClientSignInPage> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Create Client Account"),
+            const Text(
+              "Create Client Account",
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2),
+            ),
+            whiteSpace(20),
             createInput(
               context,
               300,
@@ -44,18 +51,24 @@ class _ClientSignInPageState extends State<ClientSignInPage> {
                 return null;
               },
             ),
+            whiteSpace(10),
             SizedBox(
                 width: 300,
                 child: PasswordField(
                     hintText: "Password", controller: passwordController)),
-            actionButton(context, "Sign Up", onPressed: signUp),
+            whiteSpace(15),
             actionButton(
               context,
-              "Login",
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
+              "Sign Up",
+              width: 250,
+              onPressed: signUp,
+            ),
+            whiteSpace(5),
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Login Instead"))
           ],
         )),
       ),

@@ -23,7 +23,6 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
 
   Future checkCredentials(String email, {bool shouldLogin = false}) async {
     email = email.trim();
-    print("hello");
     bool isClientAwait = await Auth().checkIfAdmin(email);
     if (!mounted) {
       return;
@@ -49,8 +48,12 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           children: [
             const Text(
               "Login as Admin",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2),
             ),
+            whiteSpace(20),
             createInput(
               context,
               300,
@@ -73,13 +76,16 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 return null;
               },
             ),
+            whiteSpace(10),
             SizedBox(
                 width: 300,
                 child: PasswordField(
                     hintText: "Password", controller: passwordController)),
+            whiteSpace(10),
             actionButton(
               context,
               "Login",
+              width: 250,
               onPressed: login,
             ),
           ],

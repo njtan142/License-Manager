@@ -137,115 +137,135 @@ class _ReportViewAndEditState extends State<ReportViewAndEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("View/Edit Incident Report")),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Row(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
                 children: [
-                  Text(
-                    "Coordinates",
-                    style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ],
-              ),
-              whiteSpace(10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Latitude:",
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          whiteSpace(10),
-                          Text(
-                            _coordinates != null
-                                ? _coordinates!.latitude.toStringAsFixed(5)
-                                : "",
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ],
+                      Text(
+                        "Coordinates",
+                        style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "Longitude:",
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          whiteSpace(10),
-                          Text(
-                            _coordinates != null
-                                ? _coordinates!.longitude.toStringAsFixed(5)
-                                : "",
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      )
                     ],
                   ),
-                  actionButton(
-                    context,
-                    "Pick",
-                    width: 100,
-                    borderRadius: 20,
-                    color: Color.fromARGB(255, 149, 33, 243),
-                    onPressed: () {
-                      goToPage(
-                          context,
-                          PlacePicker(
-                              stateUpdate: updateEndLocation,
-                              getLocation: goToPlaceStart));
-                    },
+                  whiteSpace(10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Latitude:",
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                              whiteSpace(10),
+                              Text(
+                                _coordinates != null
+                                    ? _coordinates!.latitude.toStringAsFixed(5)
+                                    : "",
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Longitude:",
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                              whiteSpace(10),
+                              Text(
+                                _coordinates != null
+                                    ? _coordinates!.longitude.toStringAsFixed(5)
+                                    : "",
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      actionButton(
+                        context,
+                        "Pick",
+                        width: 100,
+                        borderRadius: 20,
+                        color: Color.fromARGB(255, 149, 33, 243),
+                        onPressed: () {
+                          goToPage(
+                              context,
+                              PlacePicker(
+                                  stateUpdate: updateEndLocation,
+                                  getLocation: goToPlaceStart));
+                        },
+                      ),
+                    ],
                   ),
+                  whiteSpace(30),
+                  createIncidentReport(context, "Record Information",
+                      "Violation", violationController),
+                  whiteSpace(30),
+                  createIncidentReport(context, "Offender", "License Number",
+                      licenseNumberController),
+                  whiteSpace(30),
+                  createIncidentReport(context, "Vehicle", "Plate Number",
+                      plateNumberController),
+                  whiteSpace(30),
+                  createIncidentReport(
+                      context, "Location", "Address", addressController),
+                  whiteSpace(30),
+                  createIncidentReport(context, "Violation Code", "Code",
+                      violationCodeController),
+                  whiteSpace(20),
                 ],
               ),
-              whiteSpace(30),
-              createIncidentReport(context, "Record Information", "Violation",
-                  violationController),
-              whiteSpace(30),
-              createIncidentReport(context, "Offender", "License Number",
-                  licenseNumberController),
-              whiteSpace(30),
-              createIncidentReport(
-                  context, "Vehicle", "Plate Number", plateNumberController),
-              whiteSpace(30),
-              createIncidentReport(
-                  context, "Location", "Address", addressController),
-              whiteSpace(30),
-              createIncidentReport(
-                  context, "Violation Code", "Code", violationCodeController),
-              whiteSpace(20),
-              actionButton(
-                context,
-                "Submit",
-                onPressed: () async {},
-                width: 300,
-                height: 60,
-                borderRadius: 20,
-                color: Color.fromARGB(255, 149, 33, 243),
-              )
-            ],
+            ),
           ),
-        ),
+          Align(
+            alignment: AlignmentDirectional.bottomEnd,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (!isEditing) {
+                    editState();
+                  } else {
+                    saveChanges();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(), //<-- SEE HERE
+                  padding: const EdgeInsets.all(15),
+                  backgroundColor: Colors.blue,
+                ),
+                child: Icon(
+                  !isEditing ? Icons.edit : Icons.check,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(!isEditing ? Icons.edit : Icons.check),
-        onPressed: () {
-          if (!isEditing) {
-            editState();
-          } else {
-            saveChanges();
-          }
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(!isEditing ? Icons.edit : Icons.check),
+      //   onPressed: () {
+      //     if (!isEditing) {
+      //       editState();
+      //     } else {
+      //       saveChanges();
+      //     }
+      //   },
+      // ),
     );
   }
 }

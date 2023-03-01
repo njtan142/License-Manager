@@ -58,6 +58,7 @@ class _AdminCreateFormState extends State<AdminCreateForm> {
                   return null;
                 },
               ),
+              whiteSpace(10),
               SizedBox(
                 width: 300,
                 child: PasswordField(

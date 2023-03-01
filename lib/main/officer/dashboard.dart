@@ -6,6 +6,7 @@ import 'package:license_manager/main/officer/active_list.dart';
 import 'package:license_manager/main/officer/drawer.dart';
 import 'package:license_manager/main/officer/homepage.dart';
 import 'package:license_manager/main/officer/profile.dart';
+import 'package:license_manager/main/officer/settings.dart';
 import 'package:license_manager/widget_builder.dart';
 
 class OfficerDashboard extends StatefulWidget {
@@ -24,6 +25,7 @@ class _OfficerDashboardState extends State<OfficerDashboard> {
     OfficerProfile(),
     Scaffold(),
     OfficerActiveList(),
+    ClientSettings(),
   ];
 
   void _onItemTapped(int index) {
@@ -55,7 +57,10 @@ class _OfficerDashboardState extends State<OfficerDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
@@ -77,6 +82,10 @@ class _OfficerDashboardState extends State<OfficerDashboard> {
           BottomNavigationBarItem(
               icon: Icon(Icons.contacts),
               label: "Active",
+              backgroundColor: containerColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: "Settings",
               backgroundColor: containerColor),
         ],
         currentIndex: _selectedIndex,

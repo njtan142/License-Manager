@@ -25,6 +25,7 @@ class _OfficerPositionDropdownState extends State<OfficerPositionDropdown> {
   Widget build(BuildContext context) {
     return Container(
       child: DropdownButton<String>(
+        dropdownColor: Color.fromARGB(255, 50, 45, 71),
         value: _selectedPosition,
         items: _positions.map((String value) {
           return DropdownMenuItem<String>(

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:license_manager/firebase/profiles/client.dart';
 import 'package:license_manager/firebase/profiles/officer.dart';
 import 'package:license_manager/main/officer/license_type.dart';
 import 'package:license_manager/widget_builder.dart';

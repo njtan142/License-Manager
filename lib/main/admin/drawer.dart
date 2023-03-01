@@ -47,6 +47,7 @@ class _AdminMenuBarState extends State<AdminMenuBar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Color.fromARGB(255, 68, 56, 115),
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
@@ -55,25 +56,37 @@ class _AdminMenuBarState extends State<AdminMenuBar> {
           Column(
             children: [
               ListTile(
-                title: const Text("Admins"),
+                title: const Text(
+                  "Admins",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
                 onTap: () {
                   goToPage(context, const AdminManagement());
                 },
               ),
               ListTile(
-                title: const Text("Officers"),
+                title: const Text(
+                  "Officers",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
                 onTap: () {
                   goToPage(context, const OfficerManagement());
                 },
               ),
               ListTile(
-                title: const Text("Clients"),
+                title: const Text(
+                  "Clients",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
                 onTap: () {
                   goToPage(context, const ClientManagement());
                 },
               ),
               ListTile(
-                title: const Text("Signout"),
+                title: const Text(
+                  "Signout",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
                 onTap: () async {
                   bool? confirmed = await showSignOutDialog(context);
                   if (confirmed == null) {
