@@ -25,6 +25,7 @@ class _ReportViewAndEditState extends State<ReportViewAndEdit> {
   final plateNumberController = TextEditingController();
   final addressController = TextEditingController();
   final violationCodeController = TextEditingController();
+  final violationFeeController = TextEditingController();
 
   LatLng? _coordinates;
   bool isEditing = false;
@@ -80,6 +81,7 @@ class _ReportViewAndEditState extends State<ReportViewAndEdit> {
         "longitude": _coordinates?.longitude,
       },
       "id": widget.data["id"],
+      "fee": int.parse(violationFeeController.text),
     };
     await Officer().setRecord(data);
     showToast("Incedent Report Saved");
@@ -224,6 +226,9 @@ class _ReportViewAndEditState extends State<ReportViewAndEdit> {
                   whiteSpace(30),
                   createIncidentReport(context, "Violation Code", "Code",
                       violationCodeController),
+                  whiteSpace(30),
+                  createIncidentReport(context, "Violation Fee", "Amount",
+                      violationFeeController),
                   whiteSpace(20),
                 ],
               ),

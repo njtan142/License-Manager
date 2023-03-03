@@ -90,11 +90,11 @@ class _ClientLoginPageState extends State<ClientLoginPage> {
               onPressed: login,
             ),
             whiteSpace(5),
-            TextButton(
-                onPressed: () {
-                  goToPage(context, ClientSignInPage());
-                },
-                child: Text("Create Account")),
+            // TextButton(
+            //     onPressed: () {
+            //       goToPage(context, ClientSignInPage());
+            //     },
+            //     child: Text("Create Account")),
           ],
         )),
       ),

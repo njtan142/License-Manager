@@ -22,6 +22,7 @@ class _CreateReportState extends State<CreateReport> {
   final plateNumberController = TextEditingController();
   final addressController = TextEditingController();
   final violationCodeController = TextEditingController();
+  final violationFeeController = TextEditingController();
 
   LatLng? _coordinates;
 
@@ -167,6 +168,9 @@ class _CreateReportState extends State<CreateReport> {
             whiteSpace(30),
             createIncidentReport(
                 context, "Violation Code", "Code", violationCodeController),
+            whiteSpace(30),
+            createIncidentReport(
+                context, "Violation Fee", "Amount", violationFeeController),
             whiteSpace(20),
             actionButton(
               context,
@@ -185,7 +189,8 @@ class _CreateReportState extends State<CreateReport> {
                   "coordinates": {
                     "latitude": _coordinates?.latitude,
                     "longitude": _coordinates?.longitude,
-                  }
+                  },
+                  "fee": int.parse(violationFeeController.text),
                 };
                 await Officer().setRecord(data);
                 showToast("Incedent Report Saved");

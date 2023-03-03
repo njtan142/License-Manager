@@ -7,6 +7,7 @@ import 'package:license_manager/main/officer/drawer.dart';
 import 'package:license_manager/main/officer/homepage.dart';
 import 'package:license_manager/main/officer/profile.dart';
 import 'package:license_manager/main/officer/settings.dart';
+import 'package:license_manager/main/officer/top_list.dart';
 import 'package:license_manager/widget_builder.dart';
 
 class OfficerDashboard extends StatefulWidget {
@@ -23,7 +24,7 @@ class _OfficerDashboardState extends State<OfficerDashboard> {
   final List<Widget> _pages = [
     OfficerHomePage(),
     OfficerProfile(),
-    Scaffold(),
+    OfficerTopList(),
     OfficerActiveList(),
     ClientSettings(),
   ];

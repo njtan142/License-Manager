@@ -288,12 +288,6 @@ class _OfficerHomePageState extends State<OfficerHomePage> {
           )
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     goToPage(context, CreateReport());
-      //   },
-      //   child: Icon(Icons.add),
-      // ),
     );
   }
 }
