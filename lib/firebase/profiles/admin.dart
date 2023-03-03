@@ -21,6 +21,19 @@ class Admin extends Profile {
     return childCount;
   }
 
+  Future<bool> addViolation(Map<String, dynamic> data) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("violations")
+          .doc()
+          .set(data, SetOptions(merge: true));
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<List<Map<String, dynamic>>> getAdminsData() async {
     String path = "users/admin/list/";
     List<QueryDocumentSnapshot<Map<String, dynamic>>> collectionList =
@@ -78,6 +91,19 @@ class Admin extends Profile {
       adminList.add(data);
     });
     return adminList;
+  }
+
+  Future<List<Map<String, dynamic>>> getViolationList() async {
+    String path = "violations/";
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> collectionList =
+        await Database().getDocs(path);
+
+    List<Map<String, dynamic>> violationList = [];
+    await Future.forEach(collectionList, (violationSnapshot) {
+      Map<String, dynamic> data = violationSnapshot.data();
+      violationList.add(data);
+    });
+    return violationList;
   }
 
   Future<List<Map<String, dynamic>>> getClientData() async {

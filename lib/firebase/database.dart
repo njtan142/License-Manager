@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Database {
@@ -63,6 +65,16 @@ class Database {
       await Future.delayed(Duration(seconds: 5));
       return getCollectionCount(path);
     }
+  }
+
+  String generateID() {
+    final random = Random();
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    String id = '';
+    for (int i = 0; i < 32; i++) {
+      id += chars[random.nextInt(chars.length)];
+    }
+    return id;
   }
 
   Future<void> setDocumentData(String path, Map<String, dynamic> data) async {

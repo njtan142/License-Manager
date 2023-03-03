@@ -3,6 +3,7 @@ import 'package:license_manager/firebase/auth.dart';
 import 'package:license_manager/main/admin/admins_view.dart';
 import 'package:license_manager/main/admin/clients_view.dart';
 import 'package:license_manager/main/admin/officers_view.dart';
+import 'package:license_manager/main/admin/violations_view.dart';
 
 import '../../firebase/profiles/admin.dart';
 import '../../main.dart';
@@ -80,6 +81,15 @@ class _AdminMenuBarState extends State<AdminMenuBar> {
                 ),
                 onTap: () {
                   goToPage(context, const ClientManagement());
+                },
+              ),
+              ListTile(
+                title: const Text(
+                  "Violations",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                onTap: () {
+                  goToPage(context, const AdminViolationsManagement());
                 },
               ),
               ListTile(

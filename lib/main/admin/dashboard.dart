@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:license_manager/main/admin/officers_view.dart';
+import 'package:license_manager/main/admin/violations_view.dart';
 
 import '../../firebase/profiles/admin.dart';
 import '../../widget_builder.dart';
@@ -69,6 +70,29 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 },
                 child:
                     CountOverview(detail: "Client Users: ", count: childCount)),
+            GestureDetector(
+              onTap: () {
+                goToPage(context, AdminViolationsManagement());
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 70,
+                  child: Card(
+                    color: Color.fromARGB(255, 146, 23, 217),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Manage Violations",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
