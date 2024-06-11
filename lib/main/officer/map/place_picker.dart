@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:license_manager/widget_builder.dart';
 import 'package:location/location.dart';
 import 'dart:convert' as convert;
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:geocoding/geocoding.dart';
 import 'map_functions.dart';
 
 class PlacePicker extends StatefulWidget {
@@ -33,22 +34,34 @@ class _PlacePickerState extends State<PlacePicker> {
       position: position,
     );
     markers.add(marker);
-    String? placeId = await getPlaceID(position);
-    if (placeId == null) {
-      return;
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+
+    if (placemarks.length > 0) {
+      Placemark placemark = placemarks.first;
+      String address =
+          "${placemark.street}, ${placemark.locality}, ${placemark.administrativeArea}, ${placemark.country}";
+      print(address);
+      widget.stateUpdate(address, position);
+      showToast("Selected ${address}");
     }
-    PlaceInfo? placeInfo = await getPlaceInfo(placeId);
-    if (placeInfo != null) {
-      widget.stateUpdate(placeInfo.address, position);
-      Fluttertoast.showToast(
-          msg: "Selected " + placeInfo.address,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    }
+
+    // String? placeId = await getPlaceID(position);
+    // if (placeId == null) {
+    //   return;
+    // }
+    // PlaceInfo? placeInfo = await getPlaceInfo(placeId);
+    // if (placeInfo != null) {
+    //   widget.stateUpdate(placeInfo.address, position);
+    //   Fluttertoast.showToast(
+    //       msg: "Selected " + placeInfo.address,
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       gravity: ToastGravity.BOTTOM,
+    //       timeInSecForIosWeb: 1,
+    //       backgroundColor: Colors.red,
+    //       textColor: Colors.white,
+    //       fontSize: 16.0);
+    // }
   }
 
   Future goToPlace({bool isLocation = false}) async {
@@ -141,8 +154,10 @@ Future<String?> getPlaceID(LatLng location) async {
       '&key=AIzaSyA036peXUIQNZBVdCKs6n3Ymin6K8OLenQ';
 
   final response = await http.get(Uri.parse(url));
+  print(response);
   if (response.statusCode == 200) {
     final data = convert.jsonDecode(response.body);
+    print(data);
     final results = data['results'][0];
     if (results.length > 0) {
       return results["place_id"];

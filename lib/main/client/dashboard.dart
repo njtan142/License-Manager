@@ -51,6 +51,7 @@ class _ClientDashboardState extends State<ClientDashboard> {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
+
     Client().updateLocation(position.latitude, position.longitude);
   }
 

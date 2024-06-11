@@ -33,6 +33,7 @@ class _ReportViewAndEditState extends State<ReportViewAndEdit> {
   @override
   void initState() {
     super.initState();
+    print(widget.data);
     try {
       violationController.text = widget.data["violation"];
       licenseNumberController.text = widget.data["offender"];
